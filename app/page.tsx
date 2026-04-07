@@ -59,10 +59,13 @@ function PageContent() {
 
   const handleGetStarted = () => {
     setShowWelcome(false);
+    // On mobile, switch to Chat tab so users know where to interact
+    if (window.innerWidth < 768) setMobileTab("chat");
   };
 
   const handleWatchDemo = () => {
     setShowWelcome(false);
+    if (window.innerWidth < 768) setMobileTab("chat");
     setDemoRequested(true);
   };
 

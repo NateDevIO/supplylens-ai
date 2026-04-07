@@ -20,7 +20,7 @@ export default function AppShell({
   mobileTab = "map",
 }: AppShellProps) {
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-gray-50 dark:bg-slate-900">
+    <div className="h-dvh flex flex-col overflow-hidden bg-gray-50 dark:bg-slate-900">
       {nav}
 
       <main className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_420px] lg:grid-cols-[1fr_480px] min-h-0">
