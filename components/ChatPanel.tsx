@@ -28,9 +28,10 @@ function getMessageText(message: {
 interface ChatPanelProps {
   demoRequested?: boolean;
   onDemoStarted?: () => void;
+  onSwitchToMap?: () => void;
 }
 
-export default function ChatPanel({ demoRequested, onDemoStarted }: ChatPanelProps) {
+export default function ChatPanel({ demoRequested, onDemoStarted, onSwitchToMap }: ChatPanelProps) {
   const { state, dispatch } = useAppState();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
@@ -212,6 +213,17 @@ export default function ChatPanel({ demoRequested, onDemoStarted }: ChatPanelPro
               ? "API key not configured. Click a scenario button above or try the demo to see the app in action."
               : `Error: ${error.message}`}
           </div>
+        )}
+        {onSwitchToMap && state.impactData && state.impactData.affectedShipmentIds.length > 0 && !isActive && !demoTyping && (
+          <button
+            onClick={onSwitchToMap}
+            className="mx-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-sm text-blue-700 dark:text-blue-300 flex items-center gap-2 cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors md:hidden animate-fade-in"
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+            Tap <strong>Map</strong> to see affected shipments and disruption zone
+          </button>
         )}
         <div ref={messagesEndRef} />
       </div>

@@ -86,6 +86,7 @@ function PageContent() {
             mobileTab={mobileTab}
             onMobileTabChange={setMobileTab}
             hasActiveScenario={!!(state.activeScenario || state.impactData)}
+            hasMapData={!!(state.impactData && state.impactData.affectedShipmentIds.length > 0)}
             onReset={() => {
               dispatch({ type: "RESET" });
               setChatKey((k) => k + 1);
@@ -121,6 +122,7 @@ function PageContent() {
             key={chatKey}
             demoRequested={demoRequested}
             onDemoStarted={() => setDemoRequested(false)}
+            onSwitchToMap={() => setMobileTab("map")}
           />
         }
         shipmentTable={<ShipmentTable />}
@@ -141,6 +143,7 @@ function NavBar({
   mobileTab,
   onMobileTabChange,
   hasActiveScenario,
+  hasMapData,
   onReset,
   onShowWelcome,
 }: {
@@ -150,6 +153,7 @@ function NavBar({
   mobileTab: "map" | "chat";
   onMobileTabChange: (tab: "map" | "chat") => void;
   hasActiveScenario: boolean;
+  hasMapData: boolean;
   onReset: () => void;
   onShowWelcome: () => void;
 }) {
@@ -183,11 +187,14 @@ function NavBar({
           role="tab"
           aria-selected={mobileTab === "map"}
           onClick={() => onMobileTabChange("map")}
-          className={`px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer ${
+          className={`relative px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer ${
             mobileTab === "map" ? "bg-blue-500 text-white" : "text-gray-300 hover:text-white"
           }`}
         >
           Map
+          {hasMapData && mobileTab !== "map" && (
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
+          )}
         </button>
         <button
           role="tab"
